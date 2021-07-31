@@ -15,7 +15,8 @@ fun main() {
     printPlayerStatus(auraColor, isBlessed, name, healthStatus)
 
     // появление чаши с огненным шаром
-    castFireball()
+    val datura = castFireball(5) // уровень одурманивания
+    println("Уровень одурманивания заклинателя: $datura")
 
     // shouldReturnAString() // функция не выполнится
 
@@ -52,6 +53,8 @@ private fun formatHealthStatus(healthPoints: Int, isBlessed: Boolean) =
             else -> " в ужасном состоянии!"
         }
 
-private fun castFireball(numFirebals: Int = 2) =
-        println("Появляется чаш: $numFirebals \"Огненный Шар\"")
-
+private fun castFireball(numFirebals: Int = 2): Int{
+    println("Появляется чаш: $numFirebals \"Огненный Шар\"")
+    if(numFirebals*numFirebals < 50) return numFirebals*numFirebals
+    else return 50
+}
