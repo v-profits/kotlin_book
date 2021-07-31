@@ -37,22 +37,21 @@ private fun printPlayerStatus(auraColor: String, isBlessed: Boolean, name: Strin
     println("$name $healthStatus")
 }
 
-private fun auraColor(isBlessed: Boolean, healthPoints: Int, isImmortal: Boolean): String {
-    val auraVisible = isBlessed && healthPoints > 50 || isImmortal // видна аура
-    val auraColor = if (auraVisible) "GREEN" else "NONE" // цвет ауры
-    return auraColor
-}
+private fun auraColor(isBlessed: Boolean, healthPoints: Int, isImmortal: Boolean) =
+        if (isBlessed && healthPoints > 50 || isImmortal) "GREEN" else "NONE" // цвет ауры
+
 
 private fun formatHealthStatus(healthPoints: Int, isBlessed: Boolean) =
-    when (healthPoints) { // состояние здоровья
-        100 -> " в отличном состоянии!"
-        in 90..100 -> " пара царапин"
-        in 75..90 ->
-            if (isBlessed) " имеет небольшие раны, но заживает довольно быстро!"
-            else " слегка ранен"
-        in 15..75 -> " выглядит тяжело раненным"
-        else -> " в ужасном состоянии!"
-    }
+        when (healthPoints) { // состояние здоровья
+            100 -> " в отличном состоянии!"
+            in 90..100 -> " пара царапин"
+            in 75..90 ->
+                if (isBlessed) " имеет небольшие раны, но заживает довольно быстро!"
+                else " слегка ранен"
+            in 15..75 -> " выглядит тяжело раненным"
+            else -> " в ужасном состоянии!"
+        }
 
 private fun castFireball(numFirebals: Int = 2) =
-    println("Появляется чаш: $numFirebals \"Огненный Шар\"")
+        println("Появляется чаш: $numFirebals \"Огненный Шар\"")
+
