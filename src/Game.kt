@@ -1,7 +1,7 @@
 fun main() {
 
     val name = "Мадригал"
-    var healthPoints = 50 // здоровье
+    val healthPoints = 50 // здоровье
     val isBlessed = true // благословенный
     val isImmortal = false // бессмертный
 
@@ -27,10 +27,16 @@ fun main() {
         in 16..20 -> "green"
         else -> "NONE"
     }
+    val statusFormatString = "(HP)(A) -> H"
     // Состояние игрока
+    /*
     println("(Aura: $auraColor) " +
             "(Blessed: ${if (isBlessed) "YES" else "NO"})")
     println("$name $healthStatus")
+    */
+    when(statusFormatString){
+        in "(HP)(A) -> H" -> println("(HP: $healthPoints)(Aura: $auraColor) -> $healthStatus")
+    }
 
     /*
     val race = "gnome" // выдуманная расса
