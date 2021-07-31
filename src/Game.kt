@@ -1,51 +1,58 @@
 fun main() {
 
     val name = "Мадригал"
-    val healthPoints = 50 // здоровье
+    val healthPoints = 89 // здоровье
     val isBlessed = true // благословенный
     val isImmortal = false // бессмертный
 
-    //Aura
-    val auraVisible = isBlessed && healthPoints > 50 || isImmortal // видна аура
-    //val auraColor = if(auraVisible) "GREEN" else "NONE" // цвет ауры
+    // Aura
+    val auraColor = auraColor(isBlessed, healthPoints, isImmortal) // цвет ауры
 
-    val healthStatus = when(healthPoints) { // состояние здоровья
+    // по числу здоровья и благословению апределяет состояние здоровья
+    val healthStatus = formatHealthStatus(healthPoints, isBlessed)
+
+    // Состояние игрока
+    printPlayerStatus(auraColor, isBlessed, name, healthStatus)
+
+    // появление чаши с огненным шаром
+    castFireball()
+
+    // shouldReturnAString() // функция не выполнится
+
+    `пользователи должны выходить из системы при нажатии кнопки выход`()
+}
+fun `пользователи должны выходить из системы при нажатии кнопки выход`() {
+    println("ключ: выход")
+}
+
+/*
+fun shouldReturnAString(): String {
+    TODO("реализуйте здесь функцию построения строк, чтобы возвращать строку")
+    println(" ") // компилятор дальше не читает код
+}
+*/
+private fun printPlayerStatus(auraColor: String, isBlessed: Boolean, name: String, healthStatus: String) {
+    println("(Aura: $auraColor) " +
+            "(Blessed: ${if (isBlessed) "YES" else "NO"})")
+    println("$name $healthStatus")
+}
+
+private fun auraColor(isBlessed: Boolean, healthPoints: Int, isImmortal: Boolean): String {
+    val auraVisible = isBlessed && healthPoints > 50 || isImmortal // видна аура
+    val auraColor = if (auraVisible) "GREEN" else "NONE" // цвет ауры
+    return auraColor
+}
+
+private fun formatHealthStatus(healthPoints: Int, isBlessed: Boolean) =
+    when (healthPoints) { // состояние здоровья
         100 -> " в отличном состоянии!"
         in 90..100 -> " пара царапин"
         in 75..90 ->
-            if(isBlessed) " имеет небольшие раны, но заживает довольно быстро!"
+            if (isBlessed) " имеет небольшие раны, но заживает довольно быстро!"
             else " слегка ранен"
         in 15..75 -> " выглядит тяжело раненным"
         else -> " в ужасном состоянии!"
     }
 
-    val karma = (Math.pow(Math.random(), (110 - healthPoints) / 100.0) * 20 ).toInt()
-    val auraColor = when(karma){
-        in 0..5 -> "red"
-        in 6..10 -> "orange"
-        in 11..15 -> "purple"
-        in 16..20 -> "green"
-        else -> "NONE"
-    }
-    val statusFormatString = "(HP)(A) -> H"
-    // Состояние игрока
-    /*
-    println("(Aura: $auraColor) " +
-            "(Blessed: ${if (isBlessed) "YES" else "NO"})")
-    println("$name $healthStatus")
-    */
-    when(statusFormatString){
-        in "(HP)(A) -> H" -> println("(HP: $healthPoints)(Aura: $auraColor) -> $healthStatus")
-    }
-
-    /*
-    val race = "gnome" // выдуманная расса
-    val faction = when (race) { // фракции рассы
-        "dwarf" -> "Хранители шахт"
-        "gnome" -> "Хранители шахт"
-        "orc" -> "Свободные люди с холмов"
-        "human" -> "Свободные люди с холмов"
-        else -> ""
-    }
-    */
-}
+private fun castFireball(numFirebals: Int = 2) =
+    println("Появляется чаш: $numFirebals \"Огненный Шар\"")
