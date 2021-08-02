@@ -1,67 +1,133 @@
+const val MAX_EXPERIENCE: Int = 5000
+
 fun main() {
+    println(message = { // вызов анонимной функции
+        val currentYrar = 2018
+        "Добро пожаловать в деревню Сим, мэр! (авторское право $currentYrar)"
+    }.invoke())
 
-    val name = "Мадригал"
-    val healthPoints = 89 // здоровье
-    val isBlessed = true // благословенный
-    val isImmortal = false // бессмертный
+    println({ // вызов анонимной функции
+        val currentYrar = 2018
+        "Добро пожаловать в деревню Сим, мэр! (авторское право $currentYrar)"
+    }())
 
-    // Aura
-    val auraColor = auraColor(isBlessed, healthPoints, isImmortal) // цвет ауры
-
-    // по числу здоровья и благословению апределяет состояние здоровья
-    val healthStatus = formatHealthStatus(healthPoints, isBlessed)
-
-    // Состояние игрока
-    printPlayerStatus(auraColor, isBlessed, name, healthStatus)
-
-    // появление чаши с огненным шаром
-    val datura = castFireball(5) // уровень одурманивания
-    println("Уровень одурманивания заклинателя: $datura")
-    val status = when(datura){
-        in 1..10 -> "навеселе"
-        in 11..20 -> "выпивший"
-        in 21..30 -> "пьяный"
-        in 31..40 -> "сильно пьяный"
-        else -> "в стельку"
+    //---
+    val g: () -> Unit = { // вызов анонимной функции
+        println("Добро пожаловать в деревню Сим, мэтр!")
     }
-    println("Состояние: $status")
-    // shouldReturnAString() // функция не выполнится
+    g()
 
-    `пользователи должны выходить из системы при нажатии кнопки выход`()
+    val greetingFunction: () -> String = { // вызов анонимной функции
+        val currentYear = 2019
+        "Добро пожаловать в деревню Сим, мэтр! (авторское право $currentYear)"
+    }
+    println(greetingFunction())
+
+    val greetingFunction_ = { // вызов анонимной функции
+        val currentYear = 2019
+        "Добро пожаловать в деревню Сим, мэтр! (авторское право $currentYear)"
+    }
+    println(greetingFunction_())
+
+    //---
+
+    val greetingFunction2: (String) -> String = { playerName ->
+        val currentYear = 2020
+        "Добро пожаловать в деревню Сим, $playerName! (авторское право $currentYear)"
+    }
+    println(greetingFunction2("парень"))
+
+    val greetingFunction2_ = { playerName: String ->
+        val currentYear = 2020
+        "Добро пожаловать в деревню Сим, $playerName! (авторское право $currentYear)"
+    }
+    println(greetingFunction2_("парень"))
+
+    //---
+
+    val greetingFunction3: (String) -> String = {
+        val currentYear = 2021
+        "Добро пожаловать в деревню Сим, $it! (авторское право $currentYear)"
+    }
+    println(greetingFunction3("чувак"))
+
+    //---
+
+    val  greetingFunction4: (String, Int) -> String = { playerName, numBuildings ->
+        val  currentYear = 2021
+        println("Построено дополнительно домов: $numBuildings")
+        "Добро пожаловать в деревню Сим, $playerName! (авторское право $currentYear)"
+    }
+    println(greetingFunction4("мэр",2))
+
+    val  greetingFunction4_ = { playerName: String, numBuildings: Int ->
+        val  currentYear = 2021
+        println("Построено дополнительно домов: $numBuildings")
+        "Добро пожаловать в деревню Сим, $playerName! (авторское право $currentYear)"
+    }
+    println(greetingFunction4_("мэр",2))
+
+    //---
+
+    val numL = "Missiissippi".count({ l ->
+        l == 's'
+    })
+    println(numL)
+
+    println("mississippi".count({it == 'p'}))
+
+    println("mississippi".count{it == 'i'})
+
+    //---
+    /*
+    val greenFun = { name: String, number: Int ->
+        val year = 2021
+        println("построено домов: $number")
+        "добро пожаловать в деревню Сим, $name! (авторское право $year"
+    }
+    runSimul("Мэр",greenFun)
+     */
+    run("Мэр", ::prints) { name, num -> // код закомментированный выше с сокращениями
+        val year = 2021
+        println("построено домов: $num")
+        "добро пожаловать в деревню Сим, $name! (авторское право $year"
+    }
+    //===
+    run2()
 }
-fun `пользователи должны выходить из системы при нажатии кнопки выход`() {
-    println("ключ: выход")
+fun run2(){
+    val green = fn()
+    println(green("Мэр"))
 }
 
+fun fn():(String)->String{
+    val type="госпитали"
+    var num=5
+    return { name: String ->
+        val year = 2018
+        num += 1
+        println("построили $type: $num")
+        "добро пожаловать в деревню Сим, $name! (авторское право $year)"
+    }
+}
+//===
 /*
-fun shouldReturnAString(): String {
-    TODO("реализуйте здесь функцию построения строк, чтобы возвращать строку")
-    println(" ") // компилятор дальше не читает код
-}
-*/
-private fun printPlayerStatus(auraColor: String, isBlessed: Boolean, name: String, healthStatus: String) {
-    println("(Aura: $auraColor) " +
-            "(Blessed: ${if (isBlessed) "YES" else "NO"})")
-    println("$name $healthStatus")
+fun d(): String{
+    TODO()
+}*/
+//===
+fun prints(num: Int) {
+    val cost = 500
+    println("construction cost: ${cost * num}")
 }
 
-private fun auraColor(isBlessed: Boolean, healthPoints: Int, isImmortal: Boolean) =
-        if (isBlessed && healthPoints > 50 || isImmortal) "GREEN" else "NONE" // цвет ауры
-
-
-private fun formatHealthStatus(healthPoints: Int, isBlessed: Boolean) =
-        when (healthPoints) { // состояние здоровья
-            100 -> " в отличном состоянии!"
-            in 90..100 -> " пара царапин"
-            in 75..90 ->
-                if (isBlessed) " имеет небольшие раны, но заживает довольно быстро!"
-                else " слегка ранен"
-            in 15..75 -> " выглядит тяжело раненным"
-            else -> " в ужасном состоянии!"
-        }
-
-private fun castFireball(numFirebals: Int = 2): Int{
-    println("Появляется чаш: $numFirebals \"Огненный Шар\"")
-    if(numFirebals*numFirebals < 50) return numFirebals*numFirebals
-    else return 50
+// inline функции скопирует и вставит тело функции туда, откуда произведен вызов для избежания потерь производительности
+inline fun run(name: String,
+                    fn2: (Int) -> Unit,
+                    fn3: (String,Int) -> String) {
+    val num = (1..3).shuffled().last() // случайно выберет 1, 2 или 3
+    fn2(num)
+    println(fn3(name, num))
 }
+
+
